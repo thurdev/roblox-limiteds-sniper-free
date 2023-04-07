@@ -1,7 +1,11 @@
 (async function () {
   "use strict";
 
-  await timeout(1000);
+  if (isItemPage()) {
+    await timeout(1000);
+  } else {
+    await timeout(10000);
+  }
 
   let firstItem = document.getElementsByClassName("item-card-container")[0];
   let buyButton = document.querySelector(
@@ -32,10 +36,7 @@
 
       let modalTitle = document.querySelector("h4.modal-title").innerText;
 
-      if (
-        modalTitle == "Compra concluída" ||
-        modalTitle == "Purchase Complete"
-      ) {
+      if (modalTitle == "Compra concluída") {
         keepTrying = false;
         window.location.reload();
       }
