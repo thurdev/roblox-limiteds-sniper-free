@@ -33,6 +33,7 @@
       /\bhttps?:\/\/www\.roblox\.com\/catalog\/\d+?\b/g
     )[0];
     if (matchURL && !isNaN(matchURL.split("/")[4])) {
+      console.log(document.querySelector(".item-first-line").innerText);
       if (
         document.querySelector(".item-first-line").innerText ==
           "Ninguém está vendendo este item no momento." ||
