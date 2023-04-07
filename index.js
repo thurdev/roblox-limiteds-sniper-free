@@ -32,7 +32,10 @@
 
       let modalTitle = document.querySelector("h4.modal-title").innerText;
 
-      if (modalTitle == "Compra concluída") {
+      if (
+        modalTitle == "Compra concluída" ||
+        modalTitle == "Purchase Complete"
+      ) {
         keepTrying = false;
         window.location.reload();
       }
