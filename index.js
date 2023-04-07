@@ -1,18 +1,17 @@
 (async function () {
   "use strict";
 
-  await timeout(2000);
+  await timeout(1000);
 
   let firstItem = document.getElementsByClassName("item-card-container")[0];
   let buyButton = document.querySelector(
     ".item-purchase-btns-container .btn-container button"
   );
-  let modalButtonConfirm = document.querySelector("button.modal-button");
   let catalogPageURL =
     "https://www.roblox.com/catalog?Category=1&CurrencyType=3&pxMin=0&pxMax=0&salesTypeFilter=2&SortType=4";
   let triesIfNotInSale = localStorage.getItem("rlb-tries-if-not-in-sale") || 0;
 
-  if (firstItem) {
+  if (firstItem && !isItemPage()) {
     firstItem.click();
     await timeout(2500);
   } else {
@@ -22,17 +21,24 @@
   }
 
   if (buyButton) {
-    buyButton.click();
-    await timeout(1000);
+    let keepTrying = true;
 
-    modalButtonConfirm.click();
+    while (keepTrying) {
+      buyButton.click();
+      await timeout(500);
 
-    window.location.reload();
+      let modalButtonConfirm = document.querySelector("button.modal-button");
+      modalButtonConfirm.click();
+
+      let modalTitle = document.querySelector("h4.modal-title").innerText;
+
+      if (modalTitle == "Compra concluída") {
+        keepTrying = false;
+        window.location.reload();
+      }
+    }
   } else {
-    let matchURL = window.location.href.match(
-      /\bhttps?:\/\/www\.roblox\.com\/catalog\/\d+?\b/g
-    )[0];
-    if (matchURL && !isNaN(matchURL.split("/")[4])) {
+    if (isItemPage()) {
       if (
         document.querySelector(".item-first-line").innerText ==
           "Ninguém está vendendo este item no momento." ||
@@ -56,4 +62,17 @@ function timeout(timer) {
   return new Promise((resolve) => {
     setTimeout(resolve, timer);
   });
+}
+
+function isItemPage() {
+  let matchURL = window.location.href.match(
+    /\bhttps?:\/\/www\.roblox\.com\/catalog\/\d+?\b/g
+  );
+
+  if (matchURL && matchURL[0]) {
+    if (!isNaN(matchURL[0].split("/")[4])) {
+      return true;
+    }
+  }
+  return false;
 }
