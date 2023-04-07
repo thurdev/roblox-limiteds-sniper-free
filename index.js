@@ -35,7 +35,9 @@
     if (matchURL && !isNaN(matchURL.split("/")[4])) {
       if (
         document.querySelector(".item-first-line").innerText ==
-        "Ninguém está vendendo este item no momento."
+          "Ninguém está vendendo este item no momento." ||
+        document.querySelector(".item-first-line").innerText ==
+          "There is no one currently selling this item."
       ) {
         triesIfNotInSale++;
         localStorage.setItem("rlb-tries-if-not-in-sale", triesIfNotInSale);
