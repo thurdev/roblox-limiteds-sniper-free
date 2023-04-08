@@ -4,7 +4,7 @@
   if (isItemPage()) {
     await timeout(1000);
   } else {
-    await timeout(10000);
+    await timeout(5000);
   }
 
   let firstItem = document.getElementsByClassName("item-card-container")[0];
@@ -32,10 +32,18 @@
       await timeout(500);
 
       let modalButtonConfirm = document.querySelector("button.modal-button");
-      modalButtonConfirm.click();
-      await timeout(500);
+      if (
+        modalButtonConfirm &&
+        modalButtonConfirm?.innerText == "Comprar agora"
+      ) {
+        modalButtonConfirm.click();
+        await timeout(500);
+      } else if (modalButtonConfirm.innerText == "Personalizar") {
+        window.location.reload();
+        await timeout(500);
+      }
 
-      let modalTitle = document.querySelector("h4.modal-title").innerText;
+      let modalTitle = document.querySelector("h4.modal-title")?.innerText;
 
       if (
         modalTitle == "Compra concluída" ||
@@ -43,6 +51,7 @@
       ) {
         keepTrying = false;
         window.location.reload();
+        await timeout(500);
       }
     }
   } else {
