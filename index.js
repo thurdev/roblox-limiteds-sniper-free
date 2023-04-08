@@ -33,6 +33,7 @@
 
       let modalButtonConfirm = document.querySelector("button.modal-button");
       modalButtonConfirm.click();
+      await timeout(500);
 
       let modalTitle = document.querySelector("h4.modal-title").innerText;
 
