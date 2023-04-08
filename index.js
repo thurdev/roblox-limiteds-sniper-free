@@ -34,11 +34,15 @@
       let modalButtonConfirm = document.querySelector("button.modal-button");
       if (
         modalButtonConfirm &&
-        modalButtonConfirm?.innerText == "Comprar agora"
+        (modalButtonConfirm?.innerText == "Comprar agora" ||
+          modalButtonConfirm?.innerText == "Get Now")
       ) {
         modalButtonConfirm.click();
         await timeout(500);
-      } else if (modalButtonConfirm.innerText == "Personalizar") {
+      } else if (
+        modalButtonConfirm.innerText == "Personalizar" ||
+        modalButtonConfirm.innerText == "Customize"
+      ) {
         window.location.reload();
         await timeout(500);
       }
