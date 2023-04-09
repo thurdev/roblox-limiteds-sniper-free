@@ -27,6 +27,7 @@ let logSearching = false;
         chalk.gray(`[${now()}]`) + chalk.red(`[❌] Failed to get items!`)
       );
     });
+    console.log(items);
     if (items && items.length > 0) {
       logSearching = false;
       console.log(chalk.gray(`[${now()}]`) + chalk.cyan("[❗] Found items!"));
