@@ -21,13 +21,12 @@ let logSearching = false;
       );
       logSearching = true;
     }
-    await timeout(2500);
+    await timeout(1500);
     const items = await getItems().catch((err) => {
       console.log(
         chalk.gray(`[${now()}]`) + chalk.red(`[❌] Failed to get items!`)
       );
     });
-    console.log({ items });
     if (items && items.length > 0) {
       logSearching = false;
       console.log(chalk.gray(`[${now()}]`) + chalk.cyan("[❗] Found items!"));
@@ -48,7 +47,7 @@ let logSearching = false;
           );
         });
     } else {
-      await timeout(2500);
+      await timeout(1500);
     }
   }
 })();

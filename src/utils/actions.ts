@@ -24,25 +24,24 @@ export const buy = async (
 
       let buyPayload = {
         expectedCurrency: 1,
-        expectedPrice: itemDetails.price,
-        collectibleItemId: itemDetails.collectibleItemId,
+        expectedPrice: itemDetails?.price,
+        collectibleItemId: itemDetails?.collectibleItemId,
         expectedPurchaserId: user.userId,
         expectedPurchaserType: "User",
-        expectedSellerId: itemDetails.creatorTargetId,
+        expectedSellerId: itemDetails?.creatorTargetId,
         expectedSellerType: "User",
         idempotencyKey: await generateRandomUUID(), // random uuid from de.uuidService.generateRandomUuid() or CoreUtilities.uuidService.generateRandomUuid()
-        collectibleProductId: marketPlaceDetails.collectibleProductId, // wrong
+        collectibleProductId: marketPlaceDetails?.collectibleProductId, // wrong
       };
 
-      // console.log(buyPayload);
-
       await buyItem(buyPayload).then((res) => {
-        //console.log("BUY-ITEM", res);
-        if (res?.statusCode != 500) {
+        console.log(res);
+        if (res?.purchased === true) {
           resolve({
-            error: res.purchased,
+            error:
+              res?.purchased === false ? true : !res?.purchased ? true : false,
             name: itemDetails.name,
-            title: res.purchaseResult,
+            title: res?.purchaseResult,
           });
         } else {
           console.log(res);
