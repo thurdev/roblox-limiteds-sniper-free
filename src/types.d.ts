@@ -7,6 +7,7 @@ export type Item = {
 
 export type ItemDetails = {
   assetType: number;
+  collectibleItemId: string;
   creatorHasVerifiedBadge: boolean;
   creatorName: string;
   creatorTargetId: number;
@@ -18,9 +19,42 @@ export type ItemDetails = {
   itemRestrictions: string[];
   itemStatus: string[];
   itemType: ItemType;
+  lowestPrice: number;
   name: string;
   offSaleDeadline?: unknown;
   price: number;
+  totalQuantity: number;
   priceStatus: string;
+  unitsAvailableForConsumption: number;
   productId: number;
+};
+
+export type MarketPlaceItemDetail = {
+  assetStock: number;
+  collectibleItemId: string;
+  collectibleProductId: string;
+  creatorHasVerifiedBadge: boolean;
+  creatorId: number;
+  creatorName: string;
+  creatorType: string;
+  description: string;
+  errorCode: null;
+  itemRestrictions: null;
+  itemTargetId: number;
+  lowestPrice: number;
+  name: string;
+  offSaleDeadline: string;
+  price: number;
+  unitsAvailableForConsumption: number;
+};
+
+export type CurrentUser = {
+  displayName: string;
+  hasVerifiedBadge: boolean;
+  is13orOver: boolean;
+  isAuthenticated: boolean;
+  isPremiumUser: boolean;
+  isUnder13: false;
+  name: string;
+  userId: string;
 };
