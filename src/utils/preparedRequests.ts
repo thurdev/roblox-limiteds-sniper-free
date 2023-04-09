@@ -19,7 +19,14 @@ export const getItems = async (): Promise<Item[]> => {
   return response.data.data;
 };
 
-export const getItemDetails = async (itemData: Item): Promise<ItemDetails> => {
+export const getItemDetails = async (
+  itemData:
+    | Item
+    | {
+        itemType: string;
+        id: string;
+      }
+): Promise<ItemDetails> => {
   const config = {
     method: "post",
     url: "https://catalog.roblox.com/v1/catalog/items/details",
