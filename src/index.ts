@@ -73,16 +73,17 @@ let logSearching = false;
 })();
 
 (async () => {
-  const buyWhenAvailable = ["13034468672"];
+  const buyWhenAvailable = ["13063266647"];
 
   for (var id of buyWhenAvailable) {
     const itemDetails = await getItemDetails({ itemType: "Asset", id: id });
     while (true) {
+      await timeout(2500);
       const itemMarketDetails = await getMarketplaceDetails(
-        itemDetails.collectibleItemId
+        itemDetails?.collectibleItemId
       );
 
-      if (itemMarketDetails.unitsAvailableForConsumption > 0) {
+      if (itemMarketDetails?.unitsAvailableForConsumption > 0) {
         console.log(
           chalk.gray(`[${now()}]`) +
             chalk.cyan(

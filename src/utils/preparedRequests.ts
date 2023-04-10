@@ -70,7 +70,7 @@ export const getMarketplaceDetails = async (
 
   const response = await axios(config).catch((err) => {
     console.log(
-      "Could not get item details",
+      "Could not get marketplace item details, probably because its not for sale yet.",
       JSON.stringify(err.response.data)
     );
     return err.response;
