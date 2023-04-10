@@ -34,7 +34,7 @@ let logSearching = false;
       logSearching = false;
       console.log(chalk.gray(`[${now()}]`) + chalk.cyan("[❗] Found items!"));
       console.log(
-        chalk.gray(`[${now()}]`) + chalk.cyan(`[🛒] Buying items...`)
+        chalk.gray(`[${now()}]`) + chalk.cyan(`[🛒] Getting items details...`)
       );
 
       let itemsDetails = await Promise.all(
@@ -51,6 +51,13 @@ let logSearching = false;
 
       let itemsToBuy = itemsMarketDetails.filter(
         (item) => item.unitsAvailableForConsumption > 0 && item.price == 0
+      );
+
+      console.log(
+        chalk.gray(`[${now()}]`) +
+          chalk.cyan(
+            `[🛒] Buying items ${itemsToBuy.map((i) => i.name).join(",")} ...`
+          )
       );
 
       await buy(itemsToBuy)
@@ -78,7 +85,7 @@ let logSearching = false;
   for (var id of buyWhenAvailable) {
     const itemDetails = await getItemDetails({ itemType: "Asset", id: id });
     while (true) {
-      await timeout(2500);
+      await timeout(5000);
       const itemMarketDetails = await getMarketplaceDetails(
         itemDetails?.collectibleItemId
       );
