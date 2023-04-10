@@ -45,12 +45,12 @@ let logSearching = false;
 
       let itemsMarketDetails = await Promise.all(
         itemsDetails.map(async (item) => {
-          return await getMarketplaceDetails(item.collectibleItemId);
+          return await getMarketplaceDetails(item?.collectibleItemId);
         })
       );
 
       let itemsToBuy = itemsMarketDetails.filter(
-        (item) => item.unitsAvailableForConsumption > 0 && item.price == 0
+        (item) => item?.unitsAvailableForConsumption > 0 && item?.price == 0
       );
 
       console.log(
@@ -80,12 +80,12 @@ let logSearching = false;
 })();
 
 (async () => {
-  const buyWhenAvailable: string[] = [];
+  const buyWhenAvailable: string[] = ["13066756593"];
 
   for (var id of buyWhenAvailable) {
     const itemDetails = await getItemDetails({ itemType: "Asset", id: id });
     while (true) {
-      await timeout(5000);
+      await timeout(10000);
       const itemMarketDetails = await getMarketplaceDetails(
         itemDetails?.collectibleItemId
       );
