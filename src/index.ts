@@ -73,7 +73,7 @@ let logSearching = false;
 })();
 
 (async () => {
-  const buyWhenAvailable = ["13063266647"];
+  const buyWhenAvailable: string[] = [];
 
   for (var id of buyWhenAvailable) {
     const itemDetails = await getItemDetails({ itemType: "Asset", id: id });
@@ -107,6 +107,11 @@ let logSearching = false;
                 chalk.red(`[❌] Failed to buy items! Reason: ${err.title}`)
             );
           });
+      } else {
+        console.log(
+          chalk.gray(`[${now()}]`) +
+            chalk.red(`[❌] Item: ${itemDetails.name}is not available anymore!`)
+        );
       }
     }
   }
