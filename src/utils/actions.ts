@@ -1,4 +1,4 @@
-import { Item, MarketPlaceItemDetail } from "../types";
+import { Item, MarketPlaceItemDetail } from "../types/types";
 
 import {
   getItemDetails,

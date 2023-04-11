@@ -1,9 +1,8 @@
-"use strict";
 import axios from "axios";
+import { Item, ItemDetails, MarketPlaceItemDetail } from "../types/types";
 import { generateXCSRFToken } from "./token";
 
 import proxies from "./proxies.json";
-import { Item } from "../types";
 
 const prepareExtraConfig = () => {
   /* 
@@ -23,10 +22,10 @@ const prepareExtraConfig = () => {
   return extraConfig;
 };
 
-export const getItems = async () => {
+export const getItems = async (): Promise<Item[]> => {
   const config = {
     method: "get",
-    url: "https://catalog.roblox.com/v1/search/items?category=All&limit=120&maxPrice=0&minPrice=0&salesTypeFilter=2&sortType=4",
+    url: "https://catalog.roblox.com/v1/search/items?category=All&limit=120&maxPrice=0&minPrice=0&salesTypeFilter=2&sortType=4", // free limiteds
     headers: {
       "user-agent":
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36",
@@ -41,7 +40,14 @@ export const getItems = async () => {
   return response.data.data;
 };
 
-export const getItemDetails = async (itemData: Item) => {
+export const getItemDetails = async (
+  itemData:
+    | Item
+    | {
+        itemType: string;
+        id: string;
+      }
+): Promise<ItemDetails> => {
   const config = {
     method: "post",
     url: "https://catalog.roblox.com/v1/catalog/items/details",
@@ -56,6 +62,7 @@ export const getItemDetails = async (itemData: Item) => {
     },
     ...prepareExtraConfig(),
   };
+
   const response = await axios(config).catch((err) => {
     console.log(
       "Could not get item details",
@@ -66,7 +73,9 @@ export const getItemDetails = async (itemData: Item) => {
   return response.data.data[0];
 };
 
-export const getMarketplaceDetails = async (ids: string[]) => {
+export const getMarketplaceDetails = async (
+  ids: string
+): Promise<MarketPlaceItemDetail> => {
   const config = {
     method: "post",
     url: "https://apis.roblox.com/marketplace-items/v1/items/details",
@@ -81,6 +90,7 @@ export const getMarketplaceDetails = async (ids: string[]) => {
     },
     ...prepareExtraConfig(),
   };
+
   const response = await axios(config).catch((err) => {
     console.log(
       "Could not get marketplace item details, probably because its not for sale yet.",
@@ -92,7 +102,7 @@ export const getMarketplaceDetails = async (ids: string[]) => {
 };
 
 export const buyItem = async (payload: { [key: string]: unknown }) => {
-  const config: { [key: string]: unknown } = {
+  const config = {
     method: "post",
     url: `https://apis.roblox.com/marketplace-sales/v1/item/${payload.collectibleItemId}/purchase-item`,
     headers: {
@@ -117,6 +127,7 @@ export const buyItem = async (payload: { [key: string]: unknown }) => {
     data: payload,
     ...prepareExtraConfig(),
   };
+
   const response = await axios(config).catch((err) => {
     console.log("Could not buy item", JSON.stringify(err.response.data));
     return err;
