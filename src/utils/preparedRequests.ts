@@ -91,7 +91,7 @@ export const getMarketplaceDetails = async (ids: string[]) => {
   return response.data[0];
 };
 
-const buyItem = async (payload: { [key: string]: unknown }) => {
+export const buyItem = async (payload: { [key: string]: unknown }) => {
   const config: { [key: string]: unknown } = {
     method: "post",
     url: `https://apis.roblox.com/marketplace-sales/v1/item/${payload.collectibleItemId}/purchase-item`,
@@ -123,5 +123,3 @@ const buyItem = async (payload: { [key: string]: unknown }) => {
   });
   return response.data;
 };
-
-export { buyItem };
