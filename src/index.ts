@@ -86,12 +86,12 @@ let logSearching = false
   }
 })()
 ;(async () => {
-  const buyWhenAvailable: string[] = ['13066756593']
+  const buyWhenAvailable: string[] = []
 
   for (const id of buyWhenAvailable) {
     const itemDetails = await getItemDetails({ itemType: 'Asset', id: id })
     while (true) {
-      await timeout(10000)
+      await timeout(5000)
       const itemMarketDetails = await getMarketplaceDetails(
         itemDetails?.collectibleItemId
       )
