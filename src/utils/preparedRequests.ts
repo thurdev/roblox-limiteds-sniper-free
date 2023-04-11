@@ -11,7 +11,7 @@ const useproxies = false;
 const random_index = Math.floor(Math.random() * proxy_list.length);
 const random_proxy = proxy_list[random_index];
 
-if (useproxies) {
+if (useproxies = true) {
   axiosInstance.get("https://api.ipify.org/?format=json", { proxy: random_proxy });
 }
 
