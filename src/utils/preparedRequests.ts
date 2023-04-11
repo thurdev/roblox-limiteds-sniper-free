@@ -2,6 +2,26 @@ import axios from "axios";
 import { Item, ItemDetails, MarketPlaceItemDetail } from "../types/types";
 import { generateXCSRFToken } from "./token";
 
+import proxies from "./proxies.json";
+
+const prepareExtraConfig = () => {
+  /* 
+   I think the easiest is to add it here, 
+   so every request will use a different proxy, 
+   but the best way should do at least 3 to 5 requests in the same proxy,
+   then change, or something similar.
+  */
+  let extraConfig = {};
+  if (proxies.length > 0) {
+    const randomIndex = Math.floor(Math.random() * proxies.length);
+    const randomProxy = proxies[randomIndex];
+    extraConfig = {
+      proxy: randomProxy,
+    };
+  }
+  return extraConfig;
+};
+
 export const getItems = async (): Promise<Item[]> => {
   const config = {
     method: "get",
@@ -11,6 +31,7 @@ export const getItems = async (): Promise<Item[]> => {
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36",
       cookie: process.env.ROBLOX_COOKIES,
     },
+    ...prepareExtraConfig(),
   };
   const response = await axios(config).catch((err) => {
     console.log("Could not get items", JSON.stringify(err.response.data));
@@ -39,6 +60,7 @@ export const getItemDetails = async (
     data: {
       items: [itemData],
     },
+    ...prepareExtraConfig(),
   };
 
   const response = await axios(config).catch((err) => {
@@ -66,6 +88,7 @@ export const getMarketplaceDetails = async (
     data: {
       itemIds: [ids],
     },
+    ...prepareExtraConfig(),
   };
 
   const response = await axios(config).catch((err) => {
@@ -102,6 +125,7 @@ export const buyItem = async (payload: { [key: string]: unknown }) => {
       "x-csrf-token": await generateXCSRFToken(),
     },
     data: payload,
+    ...prepareExtraConfig(),
   };
 
   const response = await axios(config).catch((err) => {

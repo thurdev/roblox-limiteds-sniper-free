@@ -11,6 +11,7 @@ import { timeout } from "./utils/timers";
 import chalk from "chalk";
 import { generateXCSRFToken } from "./utils/token";
 import { now } from "./utils/timers";
+import { Item } from "./types";
 
 let logSearching = false;
 
@@ -38,7 +39,7 @@ let logSearching = false;
       );
 
       let itemsDetails = await Promise.all(
-        items.map(async (item) => {
+        items.map(async (item: Item) => {
           return await getItemDetails(item);
         })
       );
@@ -80,7 +81,7 @@ let logSearching = false;
 })();
 
 (async () => {
-  const buyWhenAvailable: string[] = ["13066756593"];
+  const buyWhenAvailable: number[] = [];
 
   for (var id of buyWhenAvailable) {
     const itemDetails = await getItemDetails({ itemType: "Asset", id: id });
