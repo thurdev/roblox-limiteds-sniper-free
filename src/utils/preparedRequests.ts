@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Item, ItemDetails, MarketPlaceItemDetail } from "../types";
+import { Item, ItemDetails, MarketPlaceItemDetail } from "../types/types";
 import { generateXCSRFToken } from "./token";
 
 export const getItems = async (): Promise<Item[]> => {
