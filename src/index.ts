@@ -91,7 +91,7 @@ let logSearching = false
   for (const id of buyWhenAvailable) {
     const itemDetails = await getItemDetails({ itemType: 'Asset', id: id })
     while (true) {
-      await timeout(5000)
+      await timeout(10000)
       const itemMarketDetails = await getMarketplaceDetails(
         itemDetails?.collectibleItemId
       )
