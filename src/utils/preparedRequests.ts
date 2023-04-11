@@ -7,7 +7,7 @@ import fs from "fs";
 const axiosInstance = axios.create();
 const raw_data = fs.readFileSync("./proxies.json");
 const proxy_list = JSON.parse(raw_data);
-const useproxies = true;
+const useproxies = false;
 const random_index = Math.floor(Math.random() * proxy_list.length);
 const random_proxy = proxy_list[random_index];
 
