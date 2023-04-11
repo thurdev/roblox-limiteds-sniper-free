@@ -14,10 +14,10 @@ const prepareExtraConfig = () => {
   */
   let extraConfig = {};
   if (proxies.length > 0) {
-    const random_index = Math.floor(Math.random() * proxies.length);
-    const random_proxy = proxies[random_index];
+    const randomIndex = Math.floor(Math.random() * proxies.length);
+    const randomProxy = proxies[randomIndex];
     extraConfig = {
-      proxy: random_proxy,
+      proxy: randomProxy,
     };
   }
   return extraConfig;
