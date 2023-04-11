@@ -1,14 +1,14 @@
-import { CurrentUser } from "./types";
+import { CurrentUser } from './types'
 
 declare global {
   interface Window {
     Roblox: {
-      CurrentUser: CurrentUser;
-    };
+      CurrentUser: CurrentUser
+    }
     CoreUtilities: {
       uuidService: {
-        generateRandomUuid: () => string;
-      };
-    };
+        generateRandomUuid: () => string
+      }
+    }
   }
 }
