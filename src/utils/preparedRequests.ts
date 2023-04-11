@@ -5,8 +5,6 @@ import { generateXCSRFToken } from "./token";
 import proxies from "./proxies.json";
 import { Item } from "../types";
 
-const axiosInstance = axios.create();
-
 const prepareExtraConfig = () => {
   /* 
    I think the easiest is to add it here, 
@@ -36,7 +34,7 @@ export const getItems = async () => {
     },
     ...prepareExtraConfig(),
   };
-  const response = await axiosInstance(config).catch((err) => {
+  const response = await axios(config).catch((err) => {
     console.log("Could not get items", JSON.stringify(err.response.data));
     return err.response;
   });
@@ -58,7 +56,7 @@ export const getItemDetails = async (itemData: Item) => {
     },
     ...prepareExtraConfig(),
   };
-  const response = await axiosInstance(config).catch((err) => {
+  const response = await axios(config).catch((err) => {
     console.log(
       "Could not get item details",
       JSON.stringify(err.response.data)
@@ -83,7 +81,7 @@ export const getMarketplaceDetails = async (ids: string[]) => {
     },
     ...prepareExtraConfig(),
   };
-  const response = await axiosInstance(config).catch((err) => {
+  const response = await axios(config).catch((err) => {
     console.log(
       "Could not get marketplace item details, probably because its not for sale yet.",
       JSON.stringify(err.response.data)
