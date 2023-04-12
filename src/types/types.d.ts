@@ -1,4 +1,4 @@
-type ItemType = "Asset" | "GamePass";
+type ItemType = 'Asset' | 'GamePass';
 
 export type Item = {
   id: number;

@@ -1,4 +1,4 @@
-import { CurrentUser } from "./types/types";
+import { CurrentUser } from './types/types';
 
 declare global {
   interface Window {

@@ -1,27 +1,27 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 dotenv.config();
 
 import {
   getItemDetails,
   getItems,
   getMarketplaceDetails,
-} from "./utils/preparedRequests";
-import { buy } from "./utils/actions";
-import { timeout } from "./utils/timers";
-import { generateXCSRFToken } from "./utils/token";
-import chalk from "chalk";
-import { Item } from "./types/types";
-import { log, title } from "./utils/terminal";
-import Job from "./job";
+} from './utils/preparedRequests';
+import { buy } from './utils/actions';
+import { timeout } from './utils/timers';
+import { generateXCSRFToken } from './utils/token';
+import chalk from 'chalk';
+import { Item } from './types/types';
+import { log, title } from './utils/terminal';
+import Job from './job';
 
-const cronExpressionFiveSeconds = "*/5 * * * * *";
+const cronExpressionFiveSeconds = '*/5 * * * * *';
 let itemsBought = 0;
 let itemsFound = 0;
 let isSearching = false;
 
-title("Roblox Limited Sniper | Not logged in | 0 items found | 0 items bought");
+title('Roblox Limited Sniper | Not logged in | 0 items found | 0 items bought');
 
-new Job("Search for items", cronExpressionFiveSeconds, async () => {
+new Job('Search for items', cronExpressionFiveSeconds, async () => {
   if (!isSearching) {
     log(`[🔁] Searching for items...`, chalk.yellow);
   }
