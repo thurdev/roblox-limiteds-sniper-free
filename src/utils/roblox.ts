@@ -1,7 +1,7 @@
-import { Browser } from "../__puppeteer";
-import { CurrentUser } from "../types/types";
+import { Browser } from '../__puppeteer';
+import { CurrentUser } from '../types';
 
-const puppeteer = require("puppeteer");
+import puppeteer from 'puppeteer';
 
 export const getCurrentUser = async (): Promise<CurrentUser> => {
   return puppeteer.launch().then(async (browser: Browser) => {
@@ -10,7 +10,7 @@ export const getCurrentUser = async (): Promise<CurrentUser> => {
     const data = await page.evaluate(() => {
       return window.Roblox.CurrentUser;
     });
-    await browser.close();
+    browser.close();
     return data;
   });
 };
@@ -22,7 +22,7 @@ export const generateRandomUUID = async () => {
     const data = await page.evaluate(() => {
       return window.CoreUtilities.uuidService.generateRandomUuid();
     });
-    await browser.close();
+    browser.close();
     return data;
   });
 };
