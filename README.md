@@ -46,9 +46,7 @@ $ yarn start
 
 ## Tutorial
 
-<iframe width="420" height="315"
-src="https://www.youtube.com/embed/JbDhmwVvf2o">
-</iframe>
+https://www.youtube.com/embed/JbDhmwVvf2o
 
 ## Bugs
 
