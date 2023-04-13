@@ -1,33 +1,42 @@
-import { Item, MarketPlaceItemDetail } from '../types/types';
+import {
+  BuyItemPayload,
+  CurrentUser,
+  Item,
+  MarketPlaceItemDetail,
+} from '../types/types';
 
 import { buyItem } from './preparedRequests';
 
-import { getCurrentUser, generateRandomUUID } from '../utils/roblox';
+import { generateRandomUUID } from '../utils/roblox';
 
 export const buy = async (
-  items: MarketPlaceItemDetail[]
-): Promise<{ [key: string]: unknown; error: boolean; name: string }> => {
+  items: MarketPlaceItemDetail[],
+  user: CurrentUser
+): Promise<{ [key: string]: unknown }> => {
   return new Promise(async (resolve, reject) => {
-    const user = await getCurrentUser();
-    for (const item of items) {
-      const buyPayload = {
+    if (!items)
+      return reject({ error: true, message: 'No items to buy', name: '' });
+
+    const boughtItems: BuyItemPayload[] = [];
+
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      const buyPayload: BuyItemPayload = {
         expectedCurrency: 1,
         expectedPrice: item?.price,
         collectibleItemId: item?.collectibleItemId,
-        expectedPurchaserId: user.userId,
+        expectedPurchaserId: user?.userId,
         expectedPurchaserType: 'User',
         expectedSellerId: item?.creatorId,
         expectedSellerType: 'User',
-        idempotencyKey: await generateRandomUUID(), // random uuid from de.uuidService.generateRandomUuid() or CoreUtilities.uuidService.generateRandomUuid()
-        collectibleProductId: item?.collectibleProductId, // wrong
+        idempotencyKey: await generateRandomUUID(),
+        collectibleProductId: item?.collectibleProductId,
+        name: item?.name,
       };
 
       await buyItem(buyPayload).then((res) => {
         if (res?.purchased === true) {
-          resolve({
-            error: false,
-            name: item?.name,
-          });
+          boughtItems.push(buyPayload);
         } else {
           console.log(res);
           reject({
@@ -36,6 +45,13 @@ export const buy = async (
           });
         }
       });
+      if (i === items.length - 1) {
+        resolve({
+          success: true,
+          names: boughtItems.map((item) => item.name).join(', '),
+          itemsLenght: boughtItems.length,
+        });
+      }
     }
   });
 };

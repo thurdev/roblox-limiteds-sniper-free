@@ -22,10 +22,13 @@ const prepareExtraConfig = () => {
   return extraConfig;
 };
 
-export const getItems = async (): Promise<Item[]> => {
+export const getItems = async ({
+  minPrice = 0,
+  maxPrice = 0,
+}): Promise<Item[]> => {
   const config = {
     method: 'get',
-    url: 'https://catalog.roblox.com/v1/search/items?category=All&limit=120&maxPrice=0&minPrice=0&salesTypeFilter=2&sortType=4', // free limiteds
+    url: `https://catalog.roblox.com/v1/search/items?category=All&limit=120&maxPrice=${maxPrice}&minPrice=${minPrice}&salesTypeFilter=2&sortType=4`, // free limiteds
     headers: {
       'user-agent':
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36',
@@ -37,7 +40,7 @@ export const getItems = async (): Promise<Item[]> => {
     console.log('Could not get items', JSON.stringify(err.response.data));
     return err.response;
   });
-  return response.data.data;
+  return response.data.data || [];
 };
 
 export const getItemDetails = async (
@@ -130,7 +133,7 @@ export const buyItem = async (payload: { [key: string]: unknown }) => {
 
   const response = await axios(config).catch((err) => {
     console.log('Could not buy item', JSON.stringify(err.response.data));
-    return err;
+    return err.response;
   });
   return response.data;
 };

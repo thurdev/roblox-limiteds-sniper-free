@@ -10,86 +10,95 @@ import { buy } from './utils/actions';
 import { timeout } from './utils/timers';
 import { generateXCSRFToken } from './utils/token';
 import chalk from 'chalk';
-import { Item } from './types/types';
+import { Item, ItemDetails, MarketPlaceItemDetail } from './types/types';
 import { log, title } from './utils/terminal';
-import Job from './job';
+import Job from './class/job';
+import { getCurrentUser } from './utils/roblox';
+import art from 'ascii-art';
 
 const cronExpressionFiveSeconds = '*/5 * * * * *';
 let itemsBought = 0;
-let itemsFound = 0;
 let isSearching = false;
+let isRunning = false;
 
-title('Roblox Limited Sniper | Not logged in | 0 items found | 0 items bought');
+// clear console
+console.clear();
+art
+  .font('   RBX Limited Sniper', 'doom')
+  .toPromise()
+  .then((data) => {
+    log(data, chalk.magentaBright, false);
+  });
+
+title(0, itemsBought, null);
 
 new Job('Search for items', cronExpressionFiveSeconds, async () => {
+  if (isRunning) {
+    return;
+  }
+  isRunning = true;
+  await generateXCSRFToken();
+  const user = await getCurrentUser().catch(() => {
+    log(`[❌] Failed to get user!`, chalk.red);
+    return null;
+  });
+
+  if (!user) {
+    isRunning = false;
+    return process.exit(0);
+  }
+
   if (!isSearching) {
-    log(`[🔁] Searching for items...`, chalk.yellow);
+    log(`[⌛] Searching for items...`, chalk.yellow);
+    title(0, itemsBought, user);
   }
   isSearching = true;
+
+  const items = await getItems({}).catch(() => {
+    log(`[❌] Failed to get items!`, chalk.red);
+    return [];
+  });
+
+  if (items.length > 0) {
+    title(items.length, itemsBought, user);
+    isSearching = false;
+    log(`[❗] Found items!`, chalk.cyan);
+
+    const itemsDetails = await Promise.all(
+      items.map(async (item: Item) => {
+        return await getItemDetails(item).catch(() => {
+          log(`[❌] Failed to get item details!`, chalk.red);
+          return null;
+        });
+      })
+    );
+
+    let itemsMarketDetails = await Promise.all(
+      itemsDetails.map(async (item: ItemDetails | null) => {
+        if (!item) return null;
+        return await getMarketplaceDetails(item.collectibleItemId).catch(() => {
+          log(`[❌] Failed to get marketplace details!`, chalk.red);
+          return null;
+        });
+      })
+    );
+
+    itemsMarketDetails = itemsMarketDetails.filter((item) => item !== null);
+
+    await buy(itemsMarketDetails as MarketPlaceItemDetail[], user)
+      .then((boughtResponse) => {
+        if (boughtResponse?.success) {
+          log(`[✔] Bought items: ${boughtResponse.names}`, chalk.green);
+          itemsBought += boughtResponse.itemsLenght as number;
+          title(0, itemsBought, user);
+          isRunning = false;
+        }
+      })
+      .catch(() => {
+        log(`[❌] Failed to buy item!`, chalk.red);
+      });
+  }
 }).run();
-
-// (async () => {
-//   while (true) {
-//     if (!logSearching) {
-//       console.log(
-//         chalk.gray(`[${now()}]`) + chalk.yellow(`[🔁] Searching for items...`)
-//       );
-//       logSearching = true;
-//     }
-//     await timeout(1500);
-//     const items = await getItems().catch((err) => {
-//       console.log(
-//         chalk.gray(`[${now()}]`) + chalk.red(`[❌] Failed to get items!`)
-//       );
-//     });
-//     if (items && items.length > 0) {
-//       logSearching = false;
-//       console.log(chalk.gray(`[${now()}]`) + chalk.cyan("[❗] Found items!"));
-//       console.log(
-//         chalk.gray(`[${now()}]`) + chalk.cyan(`[🛒] Getting items details...`)
-//       );
-
-//       let itemsDetails = await Promise.all(
-//         items.map(async (item: Item) => {
-//           return await getItemDetails(item);
-//         })
-//       );
-
-//       let itemsMarketDetails = await Promise.all(
-//         itemsDetails.map(async (item) => {
-//           return await getMarketplaceDetails(item?.collectibleItemId);
-//         })
-//       );
-
-//       let itemsToBuy = itemsMarketDetails.filter(
-//         (item) => item?.unitsAvailableForConsumption > 0 && item?.price == 0
-//       );
-
-//       console.log(
-//         chalk.gray(`[${now()}]`) +
-//           chalk.cyan(
-//             `[🛒] Buying items ${itemsToBuy.map((i) => i.name).join(",")} ...`
-//           )
-//       );
-
-//       await buy(itemsToBuy)
-//         .then((response: { error: boolean; name: string }) => {
-//           console.log(
-//             chalk.gray(`[${now()}]`) +
-//               chalk.green(`[✅] Successfully bought item: ${response.name}!`)
-//           );
-//         })
-//         .catch((err) => {
-//           console.log(
-//             chalk.gray(`[${now()}]`) +
-//               chalk.red(`[❌] Failed to buy items! Reason: ${err.title}`)
-//           );
-//         });
-//     } else {
-//       await timeout(1500);
-//     }
-//   }
-// })();
 
 // (async () => {
 //   const buyWhenAvailable: number[] = [];

@@ -58,3 +58,16 @@ export type CurrentUser = {
   name: string;
   userId: string;
 };
+
+export type BuyItemPayload = {
+  expectedCurrency: number;
+  expectedPrice: number;
+  collectibleItemId: string;
+  expectedPurchaserId: string;
+  expectedPurchaserType: string;
+  expectedSellerId: number;
+  expectedSellerType: string;
+  idempotencyKey: string;
+  collectibleProductId: string;
+  name?: string;
+};
