@@ -46,7 +46,7 @@ $ yarn start
 
 ## Tutorial
 
-https://www.youtube.com/embed/JbDhmwVvf2o
+[![Youtube Tutorial](https://img.youtube.com/vi/JbDhmwVvf2o/0.jpg)](https://www.youtube.com/watch?v=JbDhmwVvf2o)
 
 ## Bugs
 
