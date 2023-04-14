@@ -3,7 +3,7 @@
 </p>
                                                                         
 <h1 align="center">Roblox Limited Sniper </h1>
-<p align="center" style="color: #ccc;">
+<p align="center">
 This project consists of the realization of a software that helps users to quickly identify and track limited edition items on Roblox. With this tool, users can easily buy limited edition items, increasing their chances of making a profit and enhancing their overall gaming experience.
 </p>
 
@@ -69,4 +69,4 @@ I appreciate any bug reports or improvements made!
 
 MIT
 
-<i style='text-align: center; color: red;font-size: 13px;'>CopyRight © ThurDev 2023</i>
+<i style='text-align: center;font-size: 13px;'>CopyRight © ThurDev 2023</i>
