@@ -97,6 +97,8 @@ new Job('Search for items', cronExpressionFiveSeconds, async () => {
       .catch(() => {
         log(`[❌] Failed to buy item!`, chalk.red);
       });
+  } else {
+    isRunning = false;
   }
 }).run();
 
