@@ -69,7 +69,7 @@ new Job('Search for items', cronExpressionFiveSeconds, async () => {
       items.map(async (item: Item) => {
         return await getItemDetails(item).catch(() => {
           log(`[❌] Failed to get item details!`, chalk.red);
-          isSearching = false;
+          isRunning = false;
           return null;
         });
       })
@@ -80,7 +80,7 @@ new Job('Search for items', cronExpressionFiveSeconds, async () => {
         if (!item) return null;
         return await getMarketplaceDetails(item.collectibleItemId).catch(() => {
           log(`[❌] Failed to get marketplace details!`, chalk.red);
-          isSearching = false;
+          isRunning = false;
           return null;
         });
       })
@@ -99,7 +99,7 @@ new Job('Search for items', cronExpressionFiveSeconds, async () => {
       })
       .catch(() => {
         log(`[❌] Failed to buy item!`, chalk.red);
-        isSearching = false;
+        isRunning = false;
       });
   } else {
     isRunning = false;
