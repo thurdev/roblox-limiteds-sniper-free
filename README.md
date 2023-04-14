@@ -45,8 +45,10 @@ $ yarn start
 ```
 
 ## Tutorial
+                 
+<i style="font-size: 13px;">Click on gif:</i>
+[![2023-04-14 10-23-34](https://user-images.githubusercontent.com/34294813/232005405-942bd5ac-0870-49d0-9505-4e0182f759cd.gif)](https://www.youtube.com/watch?v=JbDhmwVvf2o)
 
-[![Youtube Tutorial](https://img.youtube.com/vi/JbDhmwVvf2o/0.jpg)](https://www.youtube.com/watch?v=JbDhmwVvf2o)
 
 ## Bugs
 
