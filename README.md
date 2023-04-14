@@ -1,11 +1,11 @@
-<p align="center">
-  <img src="https://i.imgur.com/ITtW8VJ.png" width=150px" align="center">
-</p>
+<div align="center">
+  <img src="https://i.imgur.com/ITtW8VJ.png" width="150px">
                                                                         
-<h1 align="center">Roblox Limited Sniper </h1>
-<p align="center">
+<h1 >Roblox Limited Sniper </h1>
+<p>
 This project consists of the realization of a software that helps users to quickly identify and track limited edition items on Roblox. With this tool, users can easily buy limited edition items, increasing their chances of making a profit and enhancing their overall gaming experience.
 </p>
+</div>
 
 ## Table of Content
 
@@ -45,8 +45,10 @@ $ yarn start
 ```
 
 ## Tutorial
+                 
+<i>Click on gif:</i>
+[![2023-04-14 10-23-34](https://user-images.githubusercontent.com/34294813/232005405-942bd5ac-0870-49d0-9505-4e0182f759cd.gif)](https://www.youtube.com/watch?v=JbDhmwVvf2o)
 
-[![Youtube Tutorial](https://img.youtube.com/vi/JbDhmwVvf2o/0.jpg)](https://www.youtube.com/watch?v=JbDhmwVvf2o)
 
 ## Bugs
 
@@ -58,10 +60,10 @@ I appreciate any bug reports or improvements made!
 ## Contributors
 
 <table align="center">
-  <tr>
-     <td align="center"><a href="https://github.com/thurdev"><img src="https://avatars0.githubusercontent.com/u/34294813?s=400&u=725e4548b484417d368e03fb7c619bd3cbd0f12f&v=4" width="100px;" alt=""/><br /><sub><b>ThurDev</b></sub></a><br /><a title="Code">💻💡</a></td>
-        <td align="center"><a href="https://github.com/facalz"><img src="https://avatars.githubusercontent.com/u/47993154?s=120&v=4" width="100px;" alt=""/><br /><sub><b>Facal</b></sub></a><br /><a title="Code">💻</a></td>
-        <td align="center"><a href="https://github.com/facalz"><img src="https://avatars.githubusercontent.com/u/66842247?v=4" width="100px;" alt=""/><br /><sub><b>CustomAmelia</b></sub></a><br /><a title="Code">💻</a></td>
+  <tr align="center">
+     <td><a href="https://github.com/thurdev"><img src="https://avatars0.githubusercontent.com/u/34294813?s=400&u=725e4548b484417d368e03fb7c619bd3cbd0f12f&v=4" width="100px" alt=""/><br /><sub><b>ThurDev</b></sub></a><br />💻💡</td>
+        <td><a href="https://github.com/facalz"><img src="https://avatars.githubusercontent.com/u/47993154?s=120&v=4" width="100px" alt=""/><br /><sub><b>Facal</b></sub></a><br />💻</td>
+        <td><a href="https://github.com/facalz"><img src="https://avatars.githubusercontent.com/u/66842247?v=4" width="100px" alt=""/><br /><sub><b>CustomAmelia</b></sub></a><br />💻</td>
   </tr>
 </table>
 
@@ -69,4 +71,4 @@ I appreciate any bug reports or improvements made!
 
 MIT
 
-<i style='text-align: center;font-size: 13px;'>CopyRight © ThurDev 2023</i>
+<i>CopyRight © ThurDev 2023</i>
