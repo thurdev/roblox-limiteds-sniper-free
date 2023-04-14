@@ -1,5 +1,5 @@
 import { Browser } from '../__puppeteer';
-import { CurrentUser } from '../types';
+import { CurrentUser } from '../types/types';
 
 import puppeteer from 'puppeteer';
 
