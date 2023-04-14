@@ -56,6 +56,7 @@ new Job('Search for items', cronExpressionFiveSeconds, async () => {
 
   const items = await getItems({}).catch(() => {
     log(`[❌] Failed to get items!`, chalk.red);
+    isSearching = false;
     return [];
   });
 
@@ -68,6 +69,7 @@ new Job('Search for items', cronExpressionFiveSeconds, async () => {
       items.map(async (item: Item) => {
         return await getItemDetails(item).catch(() => {
           log(`[❌] Failed to get item details!`, chalk.red);
+          isSearching = false;
           return null;
         });
       })
@@ -78,6 +80,7 @@ new Job('Search for items', cronExpressionFiveSeconds, async () => {
         if (!item) return null;
         return await getMarketplaceDetails(item.collectibleItemId).catch(() => {
           log(`[❌] Failed to get marketplace details!`, chalk.red);
+          isSearching = false;
           return null;
         });
       })
@@ -96,53 +99,9 @@ new Job('Search for items', cronExpressionFiveSeconds, async () => {
       })
       .catch(() => {
         log(`[❌] Failed to buy item!`, chalk.red);
+        isSearching = false;
       });
   } else {
     isRunning = false;
   }
 }).run();
-
-// (async () => {
-//   const buyWhenAvailable: number[] = [];
-
-//   for (var id of buyWhenAvailable) {
-//     const itemDetails = await getItemDetails({ itemType: "Asset", id: id });
-//     while (true) {
-//       await timeout(10000);
-//       const itemMarketDetails = await getMarketplaceDetails(
-//         itemDetails?.collectibleItemId
-//       );
-
-//       if (itemMarketDetails?.unitsAvailableForConsumption > 0) {
-//         console.log(
-//           chalk.gray(`[${now()}]`) +
-//             chalk.cyan(
-//               `[❗] Item: ${itemDetails.name} has ${itemMarketDetails.unitsAvailableForConsumption} units available!`
-//             )
-//         );
-//         console.log(
-//           chalk.gray(`[${now()}]`) +
-//             chalk.cyan(`[🛒] Buying item ${itemDetails.name}...`)
-//         );
-//         await buy([itemMarketDetails])
-//           .then((response: { error: boolean; name: string }) => {
-//             console.log(
-//               chalk.gray(`[${now()}]`) +
-//                 chalk.green(`[✅] Successfully bought item: ${response.name}!`)
-//             );
-//           })
-//           .catch((err) => {
-//             console.log(
-//               chalk.gray(`[${now()}]`) +
-//                 chalk.red(`[❌] Failed to buy items! Reason: ${err.title}`)
-//             );
-//           });
-//       } else {
-//         console.log(
-//           chalk.gray(`[${now()}]`) +
-//             chalk.red(`[❌] Item: ${itemDetails.name}is not available anymore!`)
-//         );
-//       }
-//     }
-//   }
-// })();
