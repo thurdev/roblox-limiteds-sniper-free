@@ -38,7 +38,6 @@ export const buy = async (
         if (res?.purchased === true) {
           boughtItems.push(buyPayload);
         } else {
-          console.log(res);
           reject({
             error: true,
             ...res,

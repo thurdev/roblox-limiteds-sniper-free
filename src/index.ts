@@ -20,6 +20,7 @@ const cronExpressionFiveSeconds = '*/5 * * * * *';
 let itemsBought = 0;
 let isSearching = false;
 let isRunning = false;
+const hasNoStock: number[] = [];
 
 // clear console
 console.clear();
@@ -45,7 +46,7 @@ new Job('Search for items', cronExpressionFiveSeconds, async () => {
 
   if (!user) {
     isRunning = false;
-    return process.exit(0);
+    return;
   }
 
   if (!isSearching) {
@@ -56,11 +57,18 @@ new Job('Search for items', cronExpressionFiveSeconds, async () => {
 
   const items = await getItems({}).catch(() => {
     log(`[❌] Failed to get items!`, chalk.red);
-    isSearching = false;
+    isRunning = false;
     return [];
   });
 
-  if (items.length > 0) {
+  const filterItemsThatProbablyHaveStock = items.filter((item) => {
+    if (hasNoStock.includes(item.id)) {
+      return false;
+    }
+    return true;
+  });
+
+  if (filterItemsThatProbablyHaveStock.length > 0) {
     title(items.length, itemsBought, user);
     isSearching = false;
     log(`[❗] Found items!`, chalk.cyan);
@@ -87,6 +95,24 @@ new Job('Search for items', cronExpressionFiveSeconds, async () => {
     );
 
     itemsMarketDetails = itemsMarketDetails.filter((item) => item !== null);
+    const itemsWithNoStock = itemsMarketDetails.filter(
+      (item) => item && item.unitsAvailableForConsumption <= 0
+    );
+
+    if (itemsWithNoStock.length > 0) {
+      itemsWithNoStock.forEach((item) => {
+        if (!item) return;
+        if (!hasNoStock.includes(item.itemTargetId)) {
+          hasNoStock.push(item.itemTargetId);
+          log(
+            `[❗] Item with id ${item.itemTargetId} (${item.name}) has no stock!`,
+            chalk.red
+          );
+        }
+      });
+      isRunning = false;
+      return;
+    }
 
     await buy(itemsMarketDetails as MarketPlaceItemDetail[], user)
       .then((boughtResponse) => {
@@ -97,8 +123,11 @@ new Job('Search for items', cronExpressionFiveSeconds, async () => {
           isRunning = false;
         }
       })
-      .catch(() => {
-        log(`[❌] Failed to buy item!`, chalk.red);
+      .catch((err) => {
+        log(
+          `[❌] Failed to buy item, reason: ${err?.errorMessage}!`,
+          chalk.red
+        );
         isRunning = false;
       });
   } else {
