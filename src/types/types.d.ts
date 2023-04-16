@@ -49,21 +49,15 @@ export type MarketPlaceItemDetail = {
 };
 
 export type CurrentUser = {
-  displayName: string;
-  hasVerifiedBadge: boolean;
-  is13orOver: boolean;
-  isAuthenticated: boolean;
-  isPremiumUser: boolean;
-  isUnder13: false;
-  name: string;
-  userId: string;
+  Name: string;
+  UserId: string | number;
 };
 
 export type BuyItemPayload = {
   expectedCurrency: number;
   expectedPrice: number;
   collectibleItemId: string;
-  expectedPurchaserId: string;
+  expectedPurchaserId: string | number;
   expectedPurchaserType: string;
   expectedSellerId: number;
   expectedSellerType: string;

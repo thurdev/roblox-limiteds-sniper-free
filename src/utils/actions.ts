@@ -25,7 +25,7 @@ export const buy = async (
         expectedCurrency: 1,
         expectedPrice: item?.price,
         collectibleItemId: item?.collectibleItemId,
-        expectedPurchaserId: user?.userId,
+        expectedPurchaserId: user?.UserId,
         expectedPurchaserType: 'User',
         expectedSellerId: item?.creatorId,
         expectedSellerType: 'User',

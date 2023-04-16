@@ -22,7 +22,7 @@ export const title = (
 ) => {
   exec(
     `title Roblox Limited Sniper  -  ${
-      user ? `Logged in as ${user.name}` : 'Not logged in'
+      user ? `Logged in as ${user.Name}` : 'Not logged in'
     }  -  ${itemsFound} items found  -  ${itemsBought} items bought`
   );
 };

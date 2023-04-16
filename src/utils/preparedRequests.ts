@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { Item, ItemDetails, MarketPlaceItemDetail } from '../types/types';
+import {
+  CurrentUser,
+  Item,
+  ItemDetails,
+  MarketPlaceItemDetail,
+} from '../types/types';
 import { generateXCSRFToken } from './token';
 
 import proxies from './proxies.json';
@@ -20,6 +25,27 @@ const prepareExtraConfig = () => {
     };
   }
   return extraConfig;
+};
+
+export const getCurrentUser = async (): Promise<CurrentUser> => {
+  const config = {
+    method: 'get',
+    url: 'https://www.roblox.com/my/settings/json',
+    headers: {
+      'user-agent':
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36',
+      cookie: process.env.ROBLOX_COOKIES,
+    },
+  };
+
+  const response = await axios(config).catch((err) => {
+    console.log(
+      'Could not get user settings',
+      JSON.stringify(err.response.data)
+    );
+    return err.response.data;
+  });
+  return response.data;
 };
 
 export const getItems = async ({
@@ -97,7 +123,7 @@ export const getMarketplaceDetails = async (
   const response = await axios(config).catch((err) => {
     console.log(
       'Could not get marketplace item details, probably because its not for sale yet.',
-      JSON.stringify(err.response.data)
+      JSON.stringify(err.response)
     );
     return err.response;
   });
