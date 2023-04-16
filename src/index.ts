@@ -40,7 +40,10 @@ new Job('Search for items', cronExpressionFiveSeconds, async () => {
   isRunning = true;
   await generateXCSRFToken();
   const user = await getCurrentUser().catch(() => {
-    log(`[❌] Failed to get user!`, chalk.red);
+    log(
+      `[❌] Failed to get user, but it will keep checking the items, if the error appears more than one time check your .env`,
+      chalk.red
+    );
     return null;
   });
 
@@ -87,7 +90,10 @@ new Job('Search for items', cronExpressionFiveSeconds, async () => {
       itemsDetails.map(async (item: ItemDetails | null) => {
         if (!item) return null;
         return await getMarketplaceDetails(item.collectibleItemId).catch(() => {
-          log(`[❌] Failed to get marketplace details!`, chalk.red);
+          log(
+            `[❌] Failed to get marketplace details, reason: Item not for sale yet!`,
+            chalk.red
+          );
           isRunning = false;
           return null;
         });
@@ -173,7 +179,10 @@ new Job(
 
     isRunning2 = true;
     const user = await getCurrentUser().catch(() => {
-      log(`[❌] Failed to get user!`, chalk.red);
+      log(
+        `[❌] Failed to get user, but it will keep checking the items, if the error appears more than one time check your .env`,
+        chalk.red
+      );
       return null;
     });
 
@@ -203,7 +212,10 @@ new Job(
       itemsDetails.map(async (item: ItemDetails | null) => {
         if (!item) return null;
         return await getMarketplaceDetails(item.collectibleItemId).catch(() => {
-          log(`[❌] Failed to get marketplace details!`, chalk.red);
+          log(
+            `[❌] Failed to get marketplace details, reason: Item not for sale yet!`,
+            chalk.red
+          );
           isRunning2 = false;
           return null;
         });
