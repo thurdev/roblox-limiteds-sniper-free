@@ -49,14 +49,7 @@ export type MarketPlaceItemDetail = {
 };
 
 export type CurrentUser = {
-  // displayName: string;
-  // hasVerifiedBadge: boolean;
-  // is13orOver: boolean;
-  // isAuthenticated: boolean;
-  // isPremiumUser: boolean;
-  // isUnder13: false;
   Name: string;
-  // userId: string;
   UserId: string | number;
 };
 

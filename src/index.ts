@@ -21,8 +21,9 @@ let itemsBought = 0;
 let isSearching = false;
 let isRunning = false;
 const hasNoStock: number[] = [];
-// clear console
+
 console.clear();
+
 art
   .font('   RBX Limited Sniper', 'doom')
   .toPromise()
