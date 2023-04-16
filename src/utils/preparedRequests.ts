@@ -40,7 +40,7 @@ export const getCurrentUser = async (): Promise<CurrentUser> => {
 
   const response = await axios(config).catch((err) => {
     console.log(
-      'Could not get item details',
+      'Could not get user settings',
       JSON.stringify(err.response.data)
     );
     return err.response.data;
