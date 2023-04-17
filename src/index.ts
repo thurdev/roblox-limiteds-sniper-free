@@ -20,7 +20,6 @@ const cronExpressionFiveSeconds = '*/5 * * * * *';
 let itemsBought = 0;
 let isSearching = false;
 let isRunning = false;
-const hasNoStock: number[] = [];
 
 // clear console
 console.clear();
@@ -61,14 +60,7 @@ new Job('Search for items', cronExpressionFiveSeconds, async () => {
     return [];
   });
 
-  const filterItemsThatProbablyHaveStock = items.filter((item) => {
-    if (hasNoStock.includes(item.id)) {
-      return false;
-    }
-    return true;
-  });
-
-  if (filterItemsThatProbablyHaveStock.length > 0) {
+  if (items.length > 0) {
     title(items.length, itemsBought, user);
     isSearching = false;
     log(`[❗] Found items!`, chalk.cyan);
@@ -95,24 +87,6 @@ new Job('Search for items', cronExpressionFiveSeconds, async () => {
     );
 
     itemsMarketDetails = itemsMarketDetails.filter((item) => item !== null);
-    const itemsWithNoStock = itemsMarketDetails.filter(
-      (item) => item && item.unitsAvailableForConsumption <= 0
-    );
-
-    if (itemsWithNoStock.length > 0) {
-      itemsWithNoStock.forEach((item) => {
-        if (!item) return;
-        if (!hasNoStock.includes(item.itemTargetId)) {
-          hasNoStock.push(item.itemTargetId);
-          log(
-            `[❗] Item with id ${item.itemTargetId} (${item.name}) has no stock!`,
-            chalk.red
-          );
-        }
-      });
-      isRunning = false;
-      return;
-    }
 
     await buy(itemsMarketDetails as MarketPlaceItemDetail[], user)
       .then((boughtResponse) => {
